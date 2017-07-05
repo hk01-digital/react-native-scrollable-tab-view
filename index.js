@@ -88,8 +88,8 @@ const ScrollableTabView = React.createClass({
   goToPage(pageNumber, animated = !this.props.scrollWithoutAnimation) {
     if (Platform.OS === 'ios') {
       const offset = pageNumber * this.state.containerWidth;
-      if (this.scrollView && this.scrollView._component && this.scrollView._component.scrollTo) {
-        this.scrollView.scrollTo({x: offset, y: 0, animated: !this.props.scrollWithoutAnimation, });
+      if (this.scrollView && this.scrollView._component) {
+        this.scrollView._component.scrollTo({x: offset, y: 0, animated});
       }
     } else {
       if (this.scrollView) {
@@ -98,7 +98,7 @@ const ScrollableTabView = React.createClass({
         } else {
           this.scrollView.setPage(pageNumber);
         }
-    }
+    }}
 
     const currentPage = this.state.currentPage;
     this.updateSceneKeys({
@@ -149,7 +149,7 @@ const ScrollableTabView = React.createClass({
   },
 
   renderScrollableContent() {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'ios') {
       const scenes = this._composeScenes();
       return <Animated.ScrollView
         horizontal
@@ -188,7 +188,7 @@ const ScrollableTabView = React.createClass({
                 scrollEnabled={!this.props.locked}
                 onPageScroll={(e) => {
                   const { offset, position, } = e.nativeEvent;
-                  this._updateScrollValue(position + offset);
+                  // this._updateScrollValue(position + offset);
                 }}
                 ref={(scrollView) => { this.scrollView = scrollView; }}
                 {...this.props.contentProps}
@@ -196,7 +196,6 @@ const ScrollableTabView = React.createClass({
                 {scenes}
               </ViewPagerAndroid>;
      }
-    }
   },
 
   _composeScenes() {
