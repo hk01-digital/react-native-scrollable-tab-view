@@ -298,10 +298,10 @@ const ScrollableTabView = React.createClass({
       </View>;
     } else {
       return <View style={[styles.container, this.props.style]}>
-      {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
-      {this.renderScrollableContent()}
-      {(this.props.tabBarPosition === 'bottom' || overlayTabs) && this.renderTabBar(tabBarProps)}
-    </View>;
+        {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
+        {this.renderScrollableContent()}
+        {(this.props.tabBarPosition === 'bottom' || overlayTabs) && this.renderTabBar(tabBarProps)}
+      </View>;
     }
   },
 });
