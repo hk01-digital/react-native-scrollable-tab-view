@@ -290,11 +290,19 @@ const ScrollableTabView = React.createClass({
       };
     }
 
-    return <View style={[styles.container, this.props.style, ]} onLayout={this._handleLayout}>
+    if (Platform.OS === 'ios') {
+      return <View style={[styles.container, this.props.style,]} onLayout={this._handleLayout}>
+        {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
+        {this.renderScrollableContent()}
+        {(this.props.tabBarPosition === 'bottom' || overlayTabs) && this.renderTabBar(tabBarProps)}
+      </View>;
+    } else {
+      return <View style={[styles.container, this.props.style]}>
       {this.props.tabBarPosition === 'top' && this.renderTabBar(tabBarProps)}
       {this.renderScrollableContent()}
       {(this.props.tabBarPosition === 'bottom' || overlayTabs) && this.renderTabBar(tabBarProps)}
     </View>;
+    }
   },
 });
 
@@ -302,7 +310,7 @@ module.exports = ScrollableTabView;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   scrollableContentAndroid: {
     flex: 1,
